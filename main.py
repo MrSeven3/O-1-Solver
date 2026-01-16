@@ -1,15 +1,23 @@
 import tkinter as tk
 import solver
 
-output = ""
+
 
 def solve():
-    print("solving")
-    match mode:
-        case 1,2:
-            output = solver.solve(mode,question_text,None)
-        case 3:
-            output = solver.solve(mode,question_text,api_text)
+    output = ""
+    #print("solving")
+    #print(str(mode.get()))
+    match str(mode.get()):
+        case '1'|'2':
+            output = solver.solve(int(mode.get()),str(question_text.get()),None)
+            #print(output)
+        case '3':
+            output = solver.solve(int(mode.get()),str(question_text.get()),str(api_text.get()))
+            #print(output)
+        case '0':
+            output = "Please change the mode"
+        case _:
+            output = "Mode selector error"
     txt_output.config(text=output)
 
 def check_AI_use(sel_mode):
@@ -35,7 +43,7 @@ tk.Label(master=frm_input,bg="RoyalBlue1",font=("Helvetica",15),text="Processor 
 frm_input_mode = tk.Frame(master=frm_input,bg="SlateBlue2",width=256,height=256,relief="ridge",borderwidth=4)
 
 tk.Label(master=frm_input_mode,bg="SlateBlue2",font=("Helvetica",12),text="Processor Mode").pack()
-mode = tk.StringVar(value="0")
+mode = tk.StringVar(value="1")
 opt_mode = tk.OptionMenu(frm_input_mode,mode,*["1","2","3"],command=lambda v: check_AI_use(v))
 opt_mode.pack(padx=8,pady=8)
 
@@ -64,8 +72,8 @@ frm_input.pack(fill="both",padx=12,pady=12)
 frm_output = tk.Frame(bg="OrangeRed3",)
 tk.Label(master=frm_output,bg="OrangeRed3",font=("Helvetica",15),text="Processor Output").pack()
 
-output_text = tk.StringVar(value="")
-txt_output = tk.Label(master=frm_output,bg="OrangeRed3", font=("Helvetica",12),relief="raised",borderwidth=4,textvariable=output_text)
+#output_text = tk.StringVar(value="")
+txt_output = tk.Label(master=frm_output,bg="OrangeRed3", font=("Helvetica",12),relief="raised",borderwidth=4)#,textvariable=output_text)
 txt_output.pack(fill="both",padx=12,pady=12)
 
 
