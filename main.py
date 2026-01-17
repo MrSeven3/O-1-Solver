@@ -8,28 +8,26 @@ import solver
 # api_text = hackclub ai api key var
 # txt_output = the output text label
 
-
-
 def solve():
     output = ""
 
     QUESTION_NOT_CHANGED_REGEX = r"Enter your question \(.*"
-    API_NOT_CHANGED_REGEX = r"Enter your api key \(.*"
+    API_NOT_CHANGED_REGEX = r"Enter your Hack Club AI api key \(.*"
 
     match str(mode.get()):
-        case '1'|'2':
-            if re.match(QUESTION_NOT_CHANGED_REGEX,str(question_text.get())): #check the user acutally changed the question from the starter text
+        case '1, instant'|'2, fast but limited':
+            if re.match(QUESTION_NOT_CHANGED_REGEX,str(question_text.get())): #check the user actually changed the question from the starter text
                 output = "Please enter a question!"
             else:
-                output = solver.solve(int(mode.get()),str(question_text.get()),None) #use solver
+                output = solver.solve(int(mode.get()[0]),str(question_text.get()),None) #use solver
 
-        case '3':
-            if re.match(QUESTION_NOT_CHANGED_REGEX,str(question_text.get())): #check the user acutally changed the question from the starter text
+        case '3, most versatile':
+            if re.match(QUESTION_NOT_CHANGED_REGEX,str(question_text.get())): #check the user actually changed the question from the starter text
                 output = "Please enter a question!"
-            elif re.match(API_NOT_CHANGED_REGEX,str(api_text.get())): #check the user acutally changed the api key from the starter text
+            elif re.match(API_NOT_CHANGED_REGEX,str(api_text.get())): #check the user actually changed the api key from the starter text
                 output = "Please enter an API key!"
             else:
-                output = solver.solve(int(mode.get()),str(question_text.get()),str(api_text.get())) #use solver
+                output = solver.solve(int(mode.get()[0]),str(question_text.get()),str(api_text.get())) #use solver
         case '0':
             output = "Please change the mode"
         case _:
@@ -37,7 +35,7 @@ def solve():
     txt_output.config(text=output)
 
 def check_AI_use(sel_mode):
-    if sel_mode == "3":
+    if sel_mode == "3, most versatile":
         api_txt_input.pack(padx=4,pady=4,fill="both")
     else:
         api_txt_input.pack_forget()
@@ -60,7 +58,7 @@ frm_input_mode = tk.Frame(master=frm_input,bg="SlateBlue2",width=256,height=256,
 
 tk.Label(master=frm_input_mode,bg="SlateBlue2",font=("Helvetica",12),text="Processor Mode").pack()
 mode = tk.StringVar(value="1")
-opt_mode = tk.OptionMenu(frm_input_mode,mode,*["1","2","3"],command=lambda v: check_AI_use(v)) #thanks stack overflow, had no idea how to do this
+opt_mode = tk.OptionMenu(frm_input_mode,mode,*["1, instant","2, fast but limited","3, most versatile"],command=lambda v: check_AI_use(v)) #thanks stack overflow, had no idea how to do this
 opt_mode.pack(padx=8,pady=8)
 
 frm_input_mode.pack(fill="both",padx=12,pady=12)
@@ -73,7 +71,7 @@ question_text = tk.StringVar(value="Enter your question (also delete this)")
 txt_input = tk.Entry(master=frm_input_text,bg="DodgerBlue2",borderwidth=4,textvariable=question_text)
 txt_input.pack(padx=4,pady=4,fill="both")
 
-api_text = tk.StringVar(value="Enter your api key (also delete this)")
+api_text = tk.StringVar(value="Enter your Hack Club AI api key (also delete this)")
 api_txt_input = tk.Entry(master=frm_input_text,bg="DodgerBlue3",borderwidth=4,textvariable=api_text)
 
 frm_input_text.pack(fill="both",padx=12,pady=12)
