@@ -42,10 +42,10 @@ def solve(mode, question, api_key=None):
                 )
 
                 if response.status_code == 200:
-                    texts = []
-
+                    print(response.json())
                     # unfortunately, because json and python together are annoying, I had to get AI (the irony) to help with this parser.
                     # its probably not great, but it works
+                    texts = []
                     for item in response.json()["output"]:
                         if item.get("type") == "message" and item.get("role") == "assistant":
                             for part in item.get("content", []):
