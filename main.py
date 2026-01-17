@@ -57,7 +57,7 @@ tk.Label(master=frm_input,bg="RoyalBlue1",font=("Helvetica",15),text="Processor 
 frm_input_mode = tk.Frame(master=frm_input,bg="SlateBlue2",width=256,height=256,relief="ridge",borderwidth=4)
 
 tk.Label(master=frm_input_mode,bg="SlateBlue2",font=("Helvetica",12),text="Processor Mode").pack()
-mode = tk.StringVar(value="1")
+mode = tk.StringVar(value="1, instant")
 opt_mode = tk.OptionMenu(frm_input_mode,mode,*["1, instant","2, fast but limited","3, most versatile"],command=lambda v: check_AI_use(v)) #thanks stack overflow, had no idea how to do this
 opt_mode.pack(padx=8,pady=8)
 
